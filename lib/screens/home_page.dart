@@ -1,4 +1,7 @@
 import 'package:e_commerce_app/values/app_assets.dart';
+import 'package:e_commerce_app/widgets/product_cart.dart';
+import 'package:e_commerce_app/widgets/text_price_product.dart';
+import 'package:e_commerce_app/widgets/text_product_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -16,7 +19,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
       height_full = _key.currentContext!.size!.height;
-      print("height: $height_full");
       setState(() {});
     });
     super.initState();
@@ -25,8 +27,23 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home",
+              backgroundColor: Colors.green),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.window_outlined), label: "Explore"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.trending_up), label: "Trend"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.chat_bubble_outline_outlined), label: "Chat"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
+        ],
+      ),
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.orangeAccent,
       key: _key,
       appBar: AppBar(
         title: const Text(
@@ -45,44 +62,203 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            const SearchBar(),
-            const QuangCaoDauTrang(),
-            Container(
-              height: 271,
-              width: double.infinity,
-              color: Colors.red,
-              child: Column(
-                children: [
-                  Row(
-                    children: const [
-                      TextStyleCatagory(name: "Featured"),
-                      TextStyleCatagory(name: "See more")
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                  ),
-                  Container(
-                    height: 238.0,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.all(10),
-                          width: 141,
-                          color: Colors.white,
-                        );
-                      },
-                    ),
-                  ),
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                color: Colors.orangeAccent,
+                child: Column(
+                  children: const[
+                     SearchBar(),
+                     QuangCaoDauTrang(),
+                     FeaturedList(),
+                  ],
+                ),
               ),
-            ),
-          ],
+              const Category(),
+              const FlashSale(),
+              const RecommandProduct(),
+              Container()
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class FlashSale extends StatelessWidget {
+  const FlashSale({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      width: double.infinity,
+      child: Column(
+        children: [
+          Row(
+            children: const [
+              TextStyleCatagory(name: "Flash sales"),
+              TextStyleCatagory(name: "See more")
+            ],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          Container(
+            height: 242.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return ProductCart(
+                  productName: "FS - Nike Air Max 270 React React React React",
+                  price: 299.43,
+                  priceSale: 534.0,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class RecommandProduct extends StatelessWidget {
+  const RecommandProduct({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      width: double.infinity,
+      child: Column(
+        children: [
+          Row(
+            children: const [
+              TextStyleCatagory(name: "Recommand"),
+              TextStyleCatagory(name: "See more")
+            ],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, childAspectRatio: 0.79),
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return ProductCart(
+                productName: "FS - Nike Air Max 270 React React React React",
+                price: 299.43,
+                priceSale: 534.44,
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FeaturedList extends StatelessWidget {
+  const FeaturedList({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        children: [
+          Row(
+            children: const [
+              TextStyleCatagory(name: "Featured"),
+              TextStyleCatagory(name: "See more")
+            ],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          Container(
+            height: 238.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return ProductCart(
+                  productName: "FS - Nike Air Max 270 React React React React",
+                  price: 299.43,
+                  priceSale: 534.44,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Category extends StatelessWidget {
+  const Category({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              TextStyleCatagory(name: "Category"),
+              TextStyleCatagory(name: "More Category")
+            ],
+          ),
+          Container(
+            width: double.infinity,
+            height: 112,
+            child: ListView.builder(
+                itemCount: 5,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (builder, context) {
+                  return Column(
+                    children: [
+                      Container(
+                        height: 70,
+                        width: 70,
+                        padding: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.only(left: 25, top: 12),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.asset(
+                            AppAssets.logoSach,
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(50))),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25),
+                        child: TextProductName(productName: "Novel"),
+                      )
+                    ],
+                  );
+                }),
+          )
+        ],
       ),
     );
   }
@@ -107,8 +283,8 @@ class QuangCaoDauTrang extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: Image.asset(

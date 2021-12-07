@@ -19,9 +19,12 @@ class AppAssets {
   static const twitter  = imagePath + 'Twitter.svg';
   static const upload   = imagePath + 'Upload.svg';
   static const homePage = imagePath + 'HomePage5.png';
-  static const googleLogo = imagePath + 'LogoGogiogle.png';
+  static const googleLogo = imagePath + 'LogoGoogle.png';
   static const facebookLogo = imagePath + 'LogoFacebook.png';
   static const apple    = imagePath + 'LogoApple.png';
   static const clothes  = imagePath + 'man.jpg';
   static const tiki1  = imagePath + 'tiki1.webp';
+  static const giay1 = imagePath + 'giay1.webp';
+  static const logoSach = imagePath + 'LogoSach.png';
+  static const logoSach1 = imagePath + 'LogoSach1.webp';
 }
